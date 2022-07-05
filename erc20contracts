@@ -15,3 +15,18 @@ contract PSYToken is ERC20 {
         _mint(msg.sender, initialSupply);
     }
 }
+
+
+/// Deployer's balance 
+
+> GLDToken.balanceOf(deployerAddress)
+1000000000000000000000
+
+/// Transfer tokens 
+
+> GLDToken.transfer(otherAddress, 300000000000000000000)
+> GLDToken.balanceOf(otherAddress)
+300000000000000000000
+> GLDToken.balanceOf(deployerAddress)
+700000000000000000000
+
