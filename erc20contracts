@@ -1,0 +1,17 @@
+/// Constructing an ERC20 token contract 
+
+/// The name of the token is still hypothetical and remain uncertain for now
+/// PSY (PSYCHUB) will be use in this example
+
+// contracts/PSYToken.sol
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract PSYToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("Psychub", "PSY") {
+        _mint(msg.sender, initialSupply);
+    }
+}
