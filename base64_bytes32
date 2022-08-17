@@ -31,5 +31,22 @@ contract My721Token is ERC721 {
                 Base64.encode(dataURI)
             )
         );
+   
+   
+ // contracts/Box.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/utils/Multicall.sol";
+
+contract Box is Multicall {
+    function foo() public {
+        ...
     }
+
+    function bar() public {
+        ...
+    }  }
 }
+
+
