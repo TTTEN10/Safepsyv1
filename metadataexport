@@ -1,0 +1,62 @@
+///// FOR IERC1155 /////
+
+///// FUCNTIONS //////
+
+balanceOf(account, id)
+
+balanceOfBatch(accounts, ids)
+
+setApprovalForAll(operator, approved)
+
+isApprovedForAll(account, operator)
+
+safeTransferFrom(from, to, id, amount, data)
+
+safeBatchTransferFrom(from, to, ids, amounts, data)
+
+constructor(uri_)
+
+supportsInterface(interfaceId)
+IERC165
+supportsInterface(interfaceId)
+
+
+
+uri(_)
+
+balanceOf(account, id)
+
+balanceOfBatch(accounts, ids)
+
+setApprovalForAll(operator, approved)
+
+isApprovedForAll(account, operator)
+
+safeTransferFrom(from, to, id, amount, data)
+
+safeBatchTransferFrom(from, to, ids, amounts, data)
+
+_safeTransferFrom(from, to, id, amount, data)
+
+_safeBatchTransferFrom(from, to, ids, amounts, data)
+
+_setURI(newuri)
+
+_mint(to, id, amount, data)
+
+_mintBatch(to, ids, amounts, data)
+
+_burn(from, id, amount)
+
+_burnBatch(from, ids, amounts)
+
+_setApprovalForAll(owner, operator, approved)
+
+_beforeTokenTransfer(operator, from, to, ids, amounts, data)
+
+_afterTokenTransfer(operator, from, to, ids, amounts, data)
+
+
+
+
+/// Source: https://docs.openzeppelin.com/contracts/4.x/api/token/erc1155#ERC1155Burnable ///
