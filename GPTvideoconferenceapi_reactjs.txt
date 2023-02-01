@@ -1,0 +1,81 @@
+///Building a simple and ergonomic video conference application in React.js would require the use of a pre-built library or API to handle the underlying video and audio communication, as well as the signaling process required for connecting clients. One popular library for building video conferencing applications in React is react-skyway.
+
+/// Here's an example of how to use react-skyway to create a basic video conference application:
+
+import React, { useState, useEffect } from 'react';
+import SkyWay from 'react-skyway';
+
+const VideoConference = () => {
+  const [myPeerId, setMyPeerId] = useState(null);
+  const [otherPeerId, setOtherPeerId] = useState('');
+  const [callActive, setCallActive] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [signalStrength, setSignalStrength] = useState(0);
+
+  const handlePeerId = id => {
+    setMyPeerId(id);
+  };
+
+  const handleCall = () => {
+    setCallActive(true);
+  };
+
+  const handleHangUp = () => {
+    setCallActive(false);
+  };
+
+  const handleMute = () => {
+    setMuted(!muted);
+  };
+
+  const handleSignalStrength = level => {
+    setSignalStrength(level);
+  };
+
+  return (
+    <div>
+      {!callActive && (
+        <>
+          <SkyWay
+            apiKey={API_KEY}
+            onPeerId={handlePeerId}
+            myPeerId={myPeerId}
+            videoMuted={muted}
+            audioMuted={muted}
+          />
+          <input
+            type="text"
+            placeholder="Enter other peer's ID"
+            value={otherPeerId}
+            onChange={e => setOtherPeerId(e.target.value)}
+          />
+          <button onClick={handleCall}>Call</button>
+        </>
+      )}
+      {callActive && (
+        <>
+          <SkyWay
+            apiKey={API_KEY}
+            onPeerId={handlePeerId}
+            myPeerId={myPeerId}
+            callTo={otherPeerId}
+            videoMuted={muted}
+            audioMuted={muted}
+          />
+          <button onClick={handleMute}>{muted ? 'Unmute' : 'Mute'}</button>
+          <button onClick={handleHangUp}>Hang Up</button>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default VideoConference;
+
+/// In this example, react-skyway is used to handle the underlying video and audio communication and the signaling process required for connecting clients. The component uses state to keep track of the local user's myPeerId, the otherPeerId of the remote user, and whether a call is currently active.
+
+///The component renders a form for entering the other peer's ID when no call is active and a "Call" button to initiate the call. When a call is active, the component renders the video streams and a "Hang Up" button to end the call.
+
+/// In this example, a new state variable muted is added to keep track of whether the user's audio and video are currently muted. The handleMute function is added to toggle the state of the muted variable. In the JSX, the SkyWay component is passed the videoMuted and audioMuted props which are set to the current state of the muted variable. This will mute the video and audio streams when the muted state is true. And a button is added to the JSX to allow the user to toggle the mute state.
+
+Keep in mind that this is a simplified example, you need to handle other aspects like signaling, error handling, peer discovery, and other edge cases in a real-world application.
