@@ -1,0 +1,69 @@
+pragma solidity ^0.8.0;
+
+// This is the contract for an NFT that represents a unique asset
+
+contract NFT {
+    // The identifier of the asset that this NFT represents.
+    bytes32 public assetId;
+
+    // The address of the owner of this NFT.
+    address public owner;
+    
+    // The list of addresses that are allowed to transfer this NFT.
+    address[] public allowedAddresses;
+
+    // Event that is emitted when the ownership of this NFT is transferred.
+    event Transfer(address from, address to, bytes32 assetId);
+
+    // The metadata associated with this NFT.
+    string public metadata;
+
+    // Event that is emitted when the metadata of this NFT is updated.
+    event UpdateMetadata(string metadata);
+
+    // Constructor that sets the initial values of the NFT.
+        constructor(bytes32 _assetId, address[] memory _allowedAddresses) public {
+        assetId = _assetId;
+        owner = msg.sender;
+        allowedAddresses = _allowedAddresses;
+    }
+
+    // Helper function that checks if an address is on the allowed list.
+        function isAddressAllowed(address _addr) private view returns (bool) {
+        for (uint i = 0; i < allowedAddresses.length; i++) {
+            if (allowedAddresses[i] == _addr) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // Function that allows the owner to transfer the ownership of this NFT.
+    function transfer(address _to) public {
+        require(msg.sender == owner, "Only the owner can transfer the NFT.");
+        require(isAddressAllowed(_to), "The address you are trying to transfer the NFT to is not on the allowed list.");
+        owner = _to;
+        emit Transfer(msg.sender, _to, assetId);
+    }
+    }
+    
+    // Function that allows the owner to update the metadata of this NFT.
+    function updateMetadata(string memory _metadata) public {
+        require(msg.sender == owner, "Only the owner can update the metadata of the NFT.");
+        metadata = _metadata;
+        emit UpdateMetadata(_metadata);
+    }
+}
+/// This NFT contract has a few key features:
+/// It has a bytes32 public variable assetId that represents the identifier of the asset that this NFT represents.
+/// It has an address public variable owner that represents the address of the owner of this NFT.
+/// It has a constructor function that sets the initial values of the NFT. 
+/// This function takes in a bytes32 argument _assetId, which is used to set the value of the assetId variable.
+/// It has a transfer function that allows the owner to transfer the ownership of this NFT to another address. 
+/// This function takes in an address argument _to, which is used to set the value of the owner variable.
+/// In this modified version of the NFT contract, we added a new address[] public variable allowedAddresses that represents the list of addresses that are allowed to transfer this NFT.
+/// We also added a new constructor function that takes in an additional address[] argument _allowedAddresses, which is used to set the value of the allowedAddresses variable.
+/// Finally, we added a new isAddressAllowed helper function that checks if an address is on the allowed list. This function is called in the transfer function to ensure that the address you are trying to transfer the NFT to is on the allowed list.
+/// This is the contract for an NFT that represents a unique asset.
+/// In this modified version of the NFT contract, we added a new string public variable metadata that represents the metadata associated with this NFT.
+/// We also added a new updateMetadata function that allows the owner to update the metadata of this NFT. This function takes in a string argument _metadata, which is used to set the value of the metadata variable.
+/// Finally, we added a new UpdateMetadata event that is emitted when the metadata of this NFT is updated. This event includes the updated metadata as an argument.
