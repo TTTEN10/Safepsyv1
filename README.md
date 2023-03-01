@@ -1,3 +1,3 @@
 # Safepsyv1
 
-/// This repository contents different code and templates that can be use as resources to develop Safepsy MVP.
+/// This repository contents different smart contracts and interfaces as resources to develop Safepsy MVP.
