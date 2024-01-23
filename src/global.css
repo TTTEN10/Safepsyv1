@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kufam:wght@600&display=swap");
+body {
+  margin: 0;
+  line-height: normal;
+}
+:root {
+  /* fonts */
+  --font-kumbh-sans: "Kumbh Sans";
+  --text-md-medium: Inter;
+  --font-kufam: Kufam;
+
+  /* font sizes */
+  --font-size-5xl: 24px;
+  --font-size-lgi: 19px;
+  --text-md-medium-size: 16px;
+  --text-sm-normal-size: 14px;
+  --font-size-lg: 18px;
+  --font-size-11xl: 30px;
+  --font-size-xl: 20px;
+  --font-size-29xl: 48px;
+  --font-size-mid: 17px;
+
+  /* Colors */
+  --backgrounds-white-ffffff: #fff;
+  --brand-color: #7844a0;
+  --color-darkslateblue-100: #333461;
+  --gray-800: #4a556c;
+  --color-dimgray-100: rgba(74, 85, 108, 0.5);
+  --gray-500: #667085;
+  --primary-700: #6941c6;
+  --color-whitesmoke: #faf8f6;
+  --gray-300: #d0d5dd;
+  --gray-700: #344054;
+  --off-white-green: #f1ffe2;
+  --gray-900: #041434;
+
+  /* Gaps */
+  --gap-11xl: 30px;
+  --gap-45xl: 64px;
+  --gap-13xl: 32px;
+  --gap-base: 16px;
+  --gap-xs: 12px;
+  --gap-7xs: 6px;
+  --gap-5xs: 8px;
+
+  /* Paddings */
+  --padding-2xs: 11px;
+  --padding-base: 16px;
+  --padding-45xl: 64px;
+  --padding-29xl: 48px;
+  --padding-13xl: 32px;
+  --padding-3xs: 10px;
+  --padding-lg: 18px;
+  --padding-sm: 14px;
+  --padding-xs: 12px;
+  --padding-21xl: 40px;
+
+  /* border radiuses */
+  --br-9xs: 4px;
+  --br-5xs: 8px;
+
+  /* Effects */
+  --shadow-xs: 0px 1px 2px rgba(16, 24, 40, 0.05);
+}
