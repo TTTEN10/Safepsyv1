@@ -1,0 +1,118 @@
+pip install transformers
+
+// from transformers 
+import AutoTokenizer, AutoModelForCausalLM
+
+# Load Mistral-7B-Instruct model and tokenizer
+tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.2")
+model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-Instruct-v0.2")
+
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+nltk.download('vader_lexicon')
+sia = SentimentIntensityAnalyzer()
+
+def analyze_sentiment(user_input):
+    sentiment_score = sia.polarity_scores(user_input)
+    if sentiment_score['compound'] <= -0.3:
+        emotion = 'negative'
+    elif sentiment_score['compound'] >= 0.3:
+        emotion = 'positive'
+    else:
+        emotion = 'neutral'
+    return emotion
+
+def generate_response(prompt, context=None):
+    if context:
+        prompt = context + "\nUser: " + prompt + "\nTherapist: "
+
+    inputs = tokenizer(prompt, return_tensors="pt", truncation=True)
+    outputs = model.generate(inputs["input_ids"], max_new_tokens=150, do_sample=True, temperature=0.7, top_p=0.95)
+    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    
+    return response
+def cbt_thought_challenge(user_input):
+    challenge_prompt = """
+    As a therapist, you're helping a client challenge their negative automatic thoughts.
+    The client says: '{}'. 
+    Help them by asking reflective questions and suggesting alternative, balanced thoughts.
+    """.format(user_input)
+    
+    response = generate_response(challenge_prompt)
+    return response
+
+def therapeutic_session(user_input, context=None):
+    # Detect emotion through sentiment analysis
+    emotion = analyze_sentiment(user_input)
+    
+    # Structure a response based on detected emotion
+    if emotion == 'negative':
+        response = "I understand that you're feeling down. It must be tough. Could you share more about what's on your mind?"
+    elif emotion == 'positive':
+        response = "I'm glad to hear you're feeling more positive. Can we explore what's working well for you?"
+    else:
+        response = "I see. Let’s dive deeper into your thoughts. What is standing out to you right now?"
+
+    # Combine empathy with CBT thought challenge
+    response += "\n" + cbt_thought_challenge(user_input)
+    
+    # Check for critical situations (e.g., crisis or suicidal ideation)
+    if "suicide" in user_input or "harm myself" in user_input:
+        response = "It sounds like you're in a lot of pain right now. I strongly encourage you to reach out to a professional who can offer immediate help. Here is a number for a crisis helpline: [insert local resource]."
+        return response
+    
+    return response
+def ethical_safeguard(user_input):
+    crisis_keywords = ['suicide', 'harm', 'kill myself', 'end my life', 'hopeless', 'danger', 'knife']
+    
+    for word in crisis_keywords:
+        if word in user_input.lower():
+            # Trigger ethical safeguard
+            return True
+    return False
+
+def main():
+    print("Welcome to the CBT-powered therapy chatbot.")
+    context = ""
+    
+    while True:
+        user_input = input("User: ")
+        
+        # Check for ethical safeguard
+        if ethical_safeguard(user_input):
+            print("Therapist: It seems like you're going through something very serious. Please reach out to a professional. Ending session for your safety.")
+            break
+        
+        # Generate the LLM response
+        response = therapeutic_session(user_input, context)
+        
+        # Print the response and update the context
+        print("Therapist:", response)
+        context += "\nUser: " + user_input + "\nTherapist: " + response
+        
+        # Check if user wants to exit
+        if user_input.lower() in ['exit', 'quit']:
+            break
+
+if __name__ == "__main__":
+    main()
+
+import json
+
+def save_session(user_id, context):
+    with open(f'session_{user_id}.json', 'w') as f:
+        json.dump(context, f)
+
+def load_session(user_id):
+    try:
+        with open(f'session_{user_id}.json', 'r') as f:
+            context = json.load(f)
+    except FileNotFoundError:
+        context = ""
+    return context
+
+import hashlib
+
+def anonymize_data(user_input):
+    return hashlib.sha256(user_input.encode()).hexdigest()
